@@ -1,405 +1,96 @@
-# cyber-village-admin<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel // Cyber Village</title>
+    <title>SNL Admin Panel</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #080c14;
-            --surface: #0d1420;
-            --surface2: #111a2c;
-            --border: #1e2d45;
-            --accent: #3b82f6;
-            --accent2: #06b6d4;
-            --danger: #ef4444;
-            --success: #22c55e;
-            --warning: #f59e0b;
-            --text: #e2e8f0;
-            --muted: #64748b;
-            --mono: 'Space Mono', monospace;
-            --sans: 'DM Sans', sans-serif;
+            --bg: #080c14; --surface: #0d1420; --surface2: #111a2c;
+            --border: #1e2d45; --accent: #7c6ff7; --accent2: #ec4899;
+            --danger: #ef4444; --success: #22c55e; --warning: #f59e0b;
+            --text: #e2e8f0; --muted: #64748b;
+            --mono: 'Space Mono', monospace; --sans: 'DM Sans', sans-serif;
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
 
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: var(--sans);
-            min-height: 100vh;
-        }
-
-        /* ── LOGIN ── */
         #loginPage {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(ellipse at 50% 0%, #0f1f3d 0%, #080c14 70%);
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            background: radial-gradient(ellipse at 50% 0%, rgba(124,111,247,0.15) 0%, #080c14 70%);
         }
-
         .login-wrap {
-            width: 380px;
-            padding: 48px 40px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            box-shadow: 0 0 60px rgba(59,130,246,0.08);
+            width: 380px; padding: 48px 40px; background: var(--surface);
+            border: 1px solid var(--border); border-radius: 16px;
+            box-shadow: 0 0 60px rgba(124,111,247,0.1);
         }
-
-        .login-logo {
-            font-family: var(--mono);
-            font-size: 11px;
-            letter-spacing: 3px;
-            color: var(--accent);
-            text-transform: uppercase;
-            margin-bottom: 8px;
-        }
-
-        .login-title {
-            font-family: var(--mono);
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 32px;
-            line-height: 1.2;
-        }
-
+        .login-logo { font-family: var(--mono); font-size: 11px; letter-spacing: 3px; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
+        .login-title { font-family: var(--mono); font-size: 24px; font-weight: 700; color: var(--text); margin-bottom: 32px; line-height: 1.2; }
         .login-title span { color: var(--accent); }
-
-        .field {
-            margin-bottom: 16px;
-        }
-
-        .field label {
-            display: block;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 6px;
-        }
-
-        .field input {
-            width: 100%;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 12px 14px;
-            border-radius: 8px;
-            font-family: var(--sans);
-            font-size: 14px;
-            transition: border-color 0.2s;
-            outline: none;
-        }
-
+        .field { margin-bottom: 16px; }
+        .field label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+        .field input { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 12px 14px; border-radius: 8px; font-family: var(--sans); font-size: 14px; outline: none; transition: border-color 0.2s; }
         .field input:focus { border-color: var(--accent); }
+        .btn-primary { width: 100%; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; padding: 13px; border-radius: 8px; font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 1px; cursor: pointer; transition: opacity 0.2s; margin-top: 8px; }
+        .btn-primary:hover { opacity: 0.85; }
+        .login-error { color: var(--danger); font-size: 12px; margin-top: 12px; text-align: center; min-height: 18px; }
 
-        .btn-primary {
-            width: 100%;
-            background: var(--accent);
-            color: #fff;
-            border: none;
-            padding: 13px;
-            border-radius: 8px;
-            font-family: var(--mono);
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 8px;
-        }
-
-        .btn-primary:hover { background: #2563eb; transform: translateY(-1px); }
-        .btn-primary:active { transform: translateY(0); }
-
-        .login-error {
-            color: var(--danger);
-            font-size: 12px;
-            margin-top: 12px;
-            text-align: center;
-            min-height: 18px;
-        }
-
-        /* ── MAIN LAYOUT ── */
         #adminPage { display: none; }
+        .layout { display: flex; min-height: 100vh; }
 
-        .layout {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* ── SIDEBAR ── */
         .sidebar {
-            width: 220px;
-            background: var(--surface);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            z-index: 100;
+            width: 220px; background: var(--surface); border-right: 1px solid var(--border);
+            display: flex; flex-direction: column; position: fixed; top: 0; left: 0; height: 100vh; z-index: 100;
         }
-
-        .sidebar-logo {
-            padding: 24px 20px 20px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .sidebar-logo .tag {
-            font-family: var(--mono);
-            font-size: 9px;
-            letter-spacing: 2px;
-            color: var(--accent);
-            text-transform: uppercase;
-        }
-
-        .sidebar-logo .name {
-            font-family: var(--mono);
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text);
-            margin-top: 4px;
-        }
-
-        .sidebar-nav {
-            padding: 16px 12px;
-            flex: 1;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--muted);
-            transition: all 0.15s;
-            margin-bottom: 2px;
-            border: none;
-            background: none;
-            width: 100%;
-            text-align: left;
-        }
-
+        .sidebar-logo { padding: 24px 20px 20px; border-bottom: 1px solid var(--border); }
+        .sidebar-logo .tag { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; }
+        .sidebar-logo .name { font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--text); margin-top: 4px; }
+        .sidebar-nav { padding: 16px 12px; flex: 1; }
+        .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--muted); transition: all 0.15s; margin-bottom: 2px; border: none; background: none; width: 100%; text-align: left; }
         .nav-item:hover { background: var(--surface2); color: var(--text); }
-        .nav-item.active { background: rgba(59,130,246,0.12); color: var(--accent); }
+        .nav-item.active { background: rgba(124,111,247,0.12); color: var(--accent); }
         .nav-item .icon { font-size: 16px; width: 20px; text-align: center; }
-
-        .nav-badge {
-            margin-left: auto;
-            background: var(--danger);
-            color: #fff;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 2px 6px;
-            border-radius: 10px;
-            min-width: 20px;
-            text-align: center;
-        }
-
-        .sidebar-footer {
-            padding: 16px 12px;
-            border-top: 1px solid var(--border);
-        }
-
-        .logout-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--danger);
-            transition: all 0.15s;
-            border: none;
-            background: none;
-            width: 100%;
-            text-align: left;
-        }
-
+        .nav-badge { margin-left: auto; background: var(--danger); color: #fff; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 10px; min-width: 20px; text-align: center; }
+        .sidebar-footer { padding: 16px 12px; border-top: 1px solid var(--border); }
+        .logout-btn { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500; color: var(--danger); transition: all 0.15s; border: none; background: none; width: 100%; text-align: left; }
         .logout-btn:hover { background: rgba(239,68,68,0.1); }
 
-        /* ── MAIN CONTENT ── */
-        .main {
-            margin-left: 220px;
-            flex: 1;
-            padding: 32px;
-            min-height: 100vh;
-        }
+        .main { margin-left: 220px; flex: 1; padding: 32px; min-height: 100vh; }
+        .page-header { margin-bottom: 28px; }
+        .page-header h1 { font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--text); }
+        .page-header p { font-size: 13px; color: var(--muted); margin-top: 4px; }
 
-        .page-header {
-            margin-bottom: 28px;
-        }
-
-        .page-header h1 {
-            font-family: var(--mono);
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        .page-header p {
-            font-size: 13px;
-            color: var(--muted);
-            margin-top: 4px;
-        }
-
-        /* ── TABS ── */
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* ── STAT CARDS ── */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 28px;
-        }
-
-        .stat-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            transition: border-color 0.2s;
-        }
-
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+        .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
         .stat-card:hover { border-color: var(--accent); }
+        .stat-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+        .stat-value { font-family: var(--mono); font-size: 32px; font-weight: 700; color: var(--text); line-height: 1; }
+        .stat-value.blue { color: var(--accent); } .stat-value.red { color: var(--danger); }
+        .stat-value.green { color: var(--success); } .stat-value.yellow { color: var(--warning); }
 
-        .stat-label {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 8px;
-        }
-
-        .stat-value {
-            font-family: var(--mono);
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--text);
-            line-height: 1;
-        }
-
-        .stat-value.blue { color: var(--accent); }
-        .stat-value.red { color: var(--danger); }
-        .stat-value.green { color: var(--success); }
-        .stat-value.yellow { color: var(--warning); }
-
-        /* ── TABLE ── */
-        .table-wrap {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .table-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .table-header h2 {
-            font-family: var(--mono);
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        .search-input {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-family: var(--sans);
-            font-size: 13px;
-            outline: none;
-            width: 220px;
-            transition: border-color 0.2s;
-        }
-
+        .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 20px; }
+        .table-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        .table-header h2 { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--text); }
+        .search-input { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 8px; font-family: var(--sans); font-size: 13px; outline: none; width: 220px; }
         .search-input:focus { border-color: var(--accent); }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            text-align: left;
-            padding: 12px 20px;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--muted);
-            border-bottom: 1px solid var(--border);
-            background: var(--surface2);
-        }
-
-        td {
-            padding: 14px 20px;
-            font-size: 13px;
-            border-bottom: 1px solid var(--border);
-            vertical-align: middle;
-        }
-
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 12px 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); background: var(--surface2); }
+        td { padding: 14px 20px; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: middle; }
         tr:last-child td { border-bottom: none; }
         tr:hover td { background: var(--surface2); }
 
-        /* ── BADGES ── */
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-
-        .badge-blue { background: rgba(59,130,246,0.15); color: var(--accent); border: 1px solid rgba(59,130,246,0.3); }
+        .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+        .badge-blue { background: rgba(124,111,247,0.15); color: var(--accent); border: 1px solid rgba(124,111,247,0.3); }
         .badge-red { background: rgba(239,68,68,0.15); color: var(--danger); border: 1px solid rgba(239,68,68,0.3); }
         .badge-green { background: rgba(34,197,94,0.15); color: var(--success); border: 1px solid rgba(34,197,94,0.3); }
         .badge-yellow { background: rgba(245,158,11,0.15); color: var(--warning); border: 1px solid rgba(245,158,11,0.3); }
         .badge-gray { background: rgba(100,116,139,0.15); color: var(--muted); border: 1px solid rgba(100,116,139,0.3); }
 
-        /* ── BUTTONS ── */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 7px 14px;
-            border-radius: 8px;
-            font-family: var(--sans);
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            border: none;
-            transition: all 0.15s;
-            text-decoration: none;
-            white-space: nowrap;
-        }
-
+        .btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 8px; font-family: var(--sans); font-size: 12px; font-weight: 700; cursor: pointer; border: none; transition: all 0.15s; white-space: nowrap; }
         .btn-sm { padding: 5px 10px; font-size: 11px; }
         .btn-danger { background: rgba(239,68,68,0.15); color: var(--danger); border: 1px solid rgba(239,68,68,0.3); }
         .btn-danger:hover { background: var(--danger); color: #fff; }
@@ -407,288 +98,170 @@
         .btn-success:hover { background: var(--success); color: #fff; }
         .btn-neutral { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
         .btn-neutral:hover { border-color: var(--accent); color: var(--accent); }
-        .btn-accent { background: var(--accent); color: #fff; border: 1px solid var(--accent); }
-        .btn-accent:hover { background: #2563eb; }
-
+        .btn-accent { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; border: none; }
         .btn-group { display: flex; gap: 6px; flex-wrap: wrap; }
 
-        /* ── REPORT CARDS ── */
-        .report-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 12px;
-            transition: border-color 0.2s;
-        }
+        .form-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+        .form-card h3 { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 16px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+        .form-card label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+        .form-card input { width: 100%; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 10px 14px; border-radius: 8px; font-family: var(--sans); font-size: 13px; outline: none; margin-bottom: 0; }
+        .form-card input:focus { border-color: var(--accent); }
 
+        .report-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 12px; }
         .report-card:hover { border-color: var(--accent); }
         .report-card.resolved { opacity: 0.5; }
-
-        .report-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
-        }
-
-        .report-users {
-            font-family: var(--mono);
-            font-size: 13px;
-        }
-
+        .report-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+        .report-users { font-family: var(--mono); font-size: 13px; }
         .report-users .from { color: var(--muted); }
-        .report-users .user-a { color: var(--accent2); }
+        .report-users .user-a { color: var(--accent); }
         .report-users .user-b { color: var(--danger); }
         .report-users .arrow { color: var(--muted); margin: 0 6px; }
+        .report-meta { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
+        .report-desc { font-size: 13px; color: #94a3b8; background: var(--bg); padding: 10px 14px; border-radius: 8px; border-left: 3px solid var(--border); margin-bottom: 12px; }
+        .report-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
-        .report-meta {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-        }
+        .filter-bar { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+        .filter-btn { padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; border: 1px solid var(--border); background: var(--surface); color: var(--muted); transition: all 0.15s; }
+        .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .filter-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
 
-        .report-desc {
-            font-size: 13px;
-            color: #94a3b8;
-            background: var(--bg);
-            padding: 10px 14px;
-            border-radius: 8px;
-            border-left: 3px solid var(--border);
-            margin-bottom: 12px;
-            line-height: 1.5;
-        }
-
-        .report-actions {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        /* ── EMPTY STATE ── */
-        .empty {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--muted);
-        }
-
+        .empty { text-align: center; padding: 60px 20px; color: var(--muted); }
         .empty .icon { font-size: 48px; margin-bottom: 12px; }
-        .empty p { font-size: 14px; }
+        .loading { text-align: center; padding: 40px; color: var(--muted); font-family: var(--mono); font-size: 12px; letter-spacing: 1px; }
 
-        /* ── LOADING ── */
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: var(--muted);
-            font-family: var(--mono);
-            font-size: 12px;
-            letter-spacing: 1px;
-        }
-
-        /* ── SCROLLBAR ── */
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-        /* ── RESPONSIVE ── */
         @media (max-width: 900px) {
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .sidebar { width: 60px; }
-            .sidebar .sidebar-logo .name,
-            .sidebar .nav-item span,
-            .sidebar .logout-btn span { display: none; }
-            .main { margin-left: 60px; }
-        }
-
-        @media (max-width: 600px) {
-            .main { padding: 16px; }
-            .stats-grid { grid-template-columns: 1fr 1fr; }
-        }
-
-        /* ── FILTER BAR ── */
-        .filter-bar {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            border: 1px solid var(--border);
-            background: var(--surface);
-            color: var(--muted);
-            transition: all 0.15s;
-        }
-
-        .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-        .filter-btn:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
-
-        /* Notification dot */
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--danger);
-            display: inline-block;
-            margin-left: 4px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+            .sidebar .sidebar-logo .name, .sidebar .nav-item span, .sidebar .logout-btn span { display: none; }
+            .main { margin-left: 60px; padding: 16px; }
+            .form-row { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════════════════
-     GİRİŞ SAYFASI
-════════════════════════════════════════════════ -->
+<!-- GİRİŞ -->
 <div id="loginPage">
     <div class="login-wrap">
-        <div class="login-logo">Cyber Village</div>
+        <div class="login-logo">SNL // Sana Ne Lazım</div>
         <div class="login-title">Admin<br><span>Paneli</span></div>
-
         <div class="field">
             <label>E-posta</label>
-            <input type="email" id="adminEmail" placeholder="admin@example.com"
-                   onkeypress="if(event.key==='Enter') adminLogin()">
+            <input type="email" id="adminEmail" placeholder="admin@example.com" onkeypress="if(event.key==='Enter') adminLogin()">
         </div>
         <div class="field">
             <label>Şifre</label>
-            <input type="password" id="adminPassword" placeholder="••••••••"
-                   onkeypress="if(event.key==='Enter') adminLogin()">
+            <input type="password" id="adminPassword" placeholder="••••••••" onkeypress="if(event.key==='Enter') adminLogin()">
         </div>
-
         <button class="btn-primary" onclick="adminLogin()">GİRİŞ YAP →</button>
         <div class="login-error" id="loginError"></div>
     </div>
 </div>
 
-<!-- ════════════════════════════════════════════════
-     ADMİN PANEL
-════════════════════════════════════════════════ -->
+<!-- PANEL -->
 <div id="adminPage">
     <div class="layout">
-
-        <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="sidebar-logo">
-                <div class="tag">Cyber Village</div>
+                <div class="tag">SNL</div>
                 <div class="name">Admin Panel</div>
             </div>
-
             <nav class="sidebar-nav">
-                <button class="nav-item active" onclick="showTab('dashTab', this)">
-                    <span class="icon">📊</span>
-                    <span>Dashboard</span>
-                </button>
-                <button class="nav-item" onclick="showTab('usersTab', this)">
-                    <span class="icon">👥</span>
-                    <span>Kullanıcılar</span>
-                </button>
+                <button class="nav-item active" onclick="showTab('dashTab', this)"><span class="icon">📊</span><span>Dashboard</span></button>
+                <button class="nav-item" onclick="showTab('usersTab', this)"><span class="icon">👥</span><span>Kullanıcılar</span></button>
+                <button class="nav-item" onclick="showTab('adsTab', this)"><span class="icon">📢</span><span>Reklamlar</span></button>
+                <button class="nav-item" onclick="showTab('jobsTab', this)"><span class="icon">💼</span><span>İş İlanları</span></button>
                 <button class="nav-item" onclick="showTab('reportsTab', this)">
-                    <span class="icon">🚨</span>
-                    <span>Şikayetler</span>
+                    <span class="icon">🚨</span><span>Şikayetler</span>
                     <span class="nav-badge" id="reportsBadge" style="display:none;">0</span>
                 </button>
             </nav>
-
             <div class="sidebar-footer">
-                <button class="logout-btn" onclick="adminLogout()">
-                    <span class="icon">🚪</span>
-                    <span>Çıkış</span>
-                </button>
+                <button class="logout-btn" onclick="adminLogout()"><span class="icon">🚪</span><span>Çıkış</span></button>
             </div>
         </aside>
 
-        <!-- MAIN -->
         <main class="main">
 
-            <!-- ── DASHBOARD ── -->
+            <!-- DASHBOARD -->
             <div class="tab-content active" id="dashTab">
-                <div class="page-header">
-                    <h1>Dashboard</h1>
-                    <p>Genel sistem istatistikleri</p>
-                </div>
-
+                <div class="page-header"><h1>Dashboard</h1><p>Genel sistem istatistikleri</p></div>
                 <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-label">Toplam Kullanıcı</div>
-                        <div class="stat-value blue" id="statUsers">—</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Bekleyen Şikayet</div>
-                        <div class="stat-value red" id="statReports">—</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Banlı Kullanıcı</div>
-                        <div class="stat-value yellow" id="statBanned">—</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Admin Sayısı</div>
-                        <div class="stat-value green" id="statAdmins">—</div>
-                    </div>
+                    <div class="stat-card"><div class="stat-label">Toplam Kullanıcı</div><div class="stat-value blue" id="statUsers">—</div></div>
+                    <div class="stat-card"><div class="stat-label">Bekleyen Şikayet</div><div class="stat-value red" id="statReports">—</div></div>
+                    <div class="stat-card"><div class="stat-label">Banlı Kullanıcı</div><div class="stat-value yellow" id="statBanned">—</div></div>
+                    <div class="stat-card"><div class="stat-label">Admin Sayısı</div><div class="stat-value green" id="statAdmins">—</div></div>
                 </div>
-
                 <div class="table-wrap">
-                    <div class="table-header">
-                        <h2>Son Kayıt Olan Kullanıcılar</h2>
-                        <button class="btn btn-neutral btn-sm" onclick="loadStats()">🔄 Yenile</button>
-                    </div>
+                    <div class="table-header"><h2>Son Kayıt Olan Kullanıcılar</h2><button class="btn btn-neutral btn-sm" onclick="loadStats()">🔄 Yenile</button></div>
                     <div id="recentUsers"><div class="loading">LOADING...</div></div>
                 </div>
             </div>
 
-            <!-- ── KULLANICILAR ── -->
+            <!-- KULLANICILAR -->
             <div class="tab-content" id="usersTab">
-                <div class="page-header">
-                    <h1>Kullanıcılar</h1>
-                    <p>Tüm kayıtlı kullanıcıları yönet</p>
-                </div>
-
+                <div class="page-header"><h1>Kullanıcılar</h1><p>Tüm kayıtlı kullanıcıları yönet</p></div>
                 <div class="table-wrap">
                     <div class="table-header">
                         <h2>Kullanıcı Listesi</h2>
                         <div style="display:flex; gap:8px;">
-                            <input type="text" class="search-input" id="userSearch"
-                                   placeholder="🔍 Ara..." oninput="filterUsers()">
+                            <input type="text" class="search-input" id="userSearch" placeholder="🔍 Ara..." oninput="filterUsers()">
                             <button class="btn btn-neutral btn-sm" onclick="loadUsers()">🔄</button>
                         </div>
                     </div>
-
-                    <div class="filter-bar" style="padding: 12px 20px; border-bottom: 1px solid var(--border);">
+                    <div class="filter-bar" style="padding:12px 20px; border-bottom:1px solid var(--border);">
                         <button class="filter-btn active" onclick="setUserFilter('all', this)">Tümü</button>
                         <button class="filter-btn" onclick="setUserFilter('banned', this)">🚫 Banlı</button>
                         <button class="filter-btn" onclick="setUserFilter('admin', this)">⭐ Admin</button>
                     </div>
-
                     <div id="usersList"><div class="loading">LOADING...</div></div>
                 </div>
             </div>
 
-            <!-- ── ŞİKAYETLER ── -->
-            <div class="tab-content" id="reportsTab">
-                <div class="page-header">
-                    <h1>Şikayetler</h1>
-                    <p>Kullanıcı şikayetlerini incele ve yönet</p>
+            <!-- REKLAMLAR -->
+            <div class="tab-content" id="adsTab">
+                <div class="page-header"><h1>Reklamlar</h1><p>Reklam yönetimi</p></div>
+                <div class="form-card">
+                    <h3>➕ Yeni Reklam Ekle</h3>
+                    <div class="form-row">
+                        <div><label>Başlık *</label><input type="text" id="adTitle" placeholder="Reklam başlığı"></div>
+                        <div><label>Link URL</label><input type="text" id="adLink" placeholder="https://..."></div>
+                    </div>
+                    <div class="form-row">
+                        <div><label>Görsel URL</label><input type="text" id="adImage" placeholder="https://..."></div>
+                        <div><label>Açıklama</label><input type="text" id="adDesc" placeholder="Kısa açıklama"></div>
+                    </div>
+                    <button class="btn btn-accent" onclick="createAd()" style="margin-top:8px;">Reklamı Yayınla</button>
                 </div>
+                <div class="table-wrap">
+                    <div class="table-header"><h2>Aktif Reklamlar</h2><button class="btn btn-neutral btn-sm" onclick="loadAdsAdmin()">🔄 Yenile</button></div>
+                    <div id="adsTable"><div class="loading">LOADING...</div></div>
+                </div>
+            </div>
 
+            <!-- İŞ İLANLARI -->
+            <div class="tab-content" id="jobsTab">
+                <div class="page-header"><h1>İş İlanları</h1><p>Tüm ilanları yönet</p></div>
+                <div class="table-wrap">
+                    <div class="table-header"><h2>İlan Listesi</h2><button class="btn btn-neutral btn-sm" onclick="loadJobsAdmin()">🔄 Yenile</button></div>
+                    <div id="jobsTable"><div class="loading">LOADING...</div></div>
+                </div>
+            </div>
+
+            <!-- ŞİKAYETLER -->
+            <div class="tab-content" id="reportsTab">
+                <div class="page-header"><h1>Şikayetler</h1><p>Kullanıcı şikayetlerini incele</p></div>
                 <div class="filter-bar">
                     <button class="filter-btn active" onclick="setReportFilter('all', this)">Tümü</button>
                     <button class="filter-btn" onclick="setReportFilter('beklemede', this)">🔴 Beklemede</button>
                     <button class="filter-btn" onclick="setReportFilter('incelendi', this)">🟡 İncelendi</button>
                     <button class="filter-btn" onclick="setReportFilter('çözüldü', this)">🟢 Çözüldü</button>
                 </div>
-
                 <div id="reportsList"><div class="loading">LOADING...</div></div>
             </div>
 
@@ -697,333 +270,283 @@
 </div>
 
 <script>
-    // ═══════════════════════════════════════════════
-    // AYARLAR - Backend URL'ini buraya yaz!
-    // ═══════════════════════════════════════════════
-    const API_URL = 'https://sohbet-ticaret-backend.onrender.com';
+const API_URL = 'https://sohbet-ticaret-backend.onrender.com';
+let adminToken = '';
+let allUsers = [], allReports = [];
+let userFilter = 'all', reportFilter = 'all';
 
-    let adminToken = '';
-    let allUsers = [];
-    let allReports = [];
-    let userFilter = 'all';
-    let reportFilter = 'all';
+async function adminLogin() {
+    const email = document.getElementById('adminEmail').value.trim();
+    const password = document.getElementById('adminPassword').value;
+    const errEl = document.getElementById('loginError');
+    errEl.textContent = '';
+    if (!email || !password) { errEl.textContent = 'E-posta ve şifre gerekli.'; return; }
+    try {
+        const res = await fetch(API_URL + '/auth/login', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        if (!res.ok) { errEl.textContent = data.detail || 'Giriş başarısız.'; return; }
+        adminToken = data.access_token;
+        const statsRes = await fetch(API_URL + '/admin/stats', {
+            headers: { 'Authorization': 'Bearer ' + adminToken }
+        });
+        if (!statsRes.ok) { errEl.textContent = 'Bu hesapta admin yetkisi yok.'; adminToken = ''; return; }
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('adminPage').style.display = 'block';
+        await Promise.all([loadStats(), loadUsers(), loadReports()]);
+    } catch (err) { errEl.textContent = 'Bağlantı hatası.'; }
+}
 
-    // ─── GİRİŞ ───
-    async function adminLogin() {
-        const email = document.getElementById('adminEmail').value.trim();
-        const password = document.getElementById('adminPassword').value;
-        const errEl = document.getElementById('loginError');
-        errEl.textContent = '';
+function adminLogout() {
+    adminToken = '';
+    document.getElementById('loginPage').style.display = 'flex';
+    document.getElementById('adminPage').style.display = 'none';
+}
 
-        if (!email || !password) { errEl.textContent = 'E-posta ve şifre gerekli.'; return; }
+function showTab(tabId, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
+    if (tabId === 'adsTab')  loadAdsAdmin();
+    if (tabId === 'jobsTab') loadJobsAdmin();
+}
 
-        try {
-            const res = await fetch(API_URL + '/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
-            });
-            const data = await res.json();
-            if (!res.ok) { errEl.textContent = data.detail || 'Giriş başarısız.'; return; }
+async function loadStats() {
+    try {
+        const res = await fetch(API_URL + '/admin/stats', { headers: { 'Authorization': 'Bearer ' + adminToken } });
+        if (!res.ok) return;
+        const s = await res.json();
+        document.getElementById('statUsers').textContent   = s.total_users    ?? '—';
+        document.getElementById('statReports').textContent = s.pending_reports ?? '—';
+        document.getElementById('statBanned').textContent  = s.banned_users    ?? '—';
+        document.getElementById('statAdmins').textContent  = s.admin_users     ?? '—';
+        const badge = document.getElementById('reportsBadge');
+        if (s.pending_reports > 0) { badge.style.display = 'inline-block'; badge.textContent = s.pending_reports; }
+        else badge.style.display = 'none';
+        renderRecentUsers(allUsers.slice(0, 8));
+    } catch (err) {}
+}
 
-            adminToken = data.access_token;
+function renderRecentUsers(users) {
+    const el = document.getElementById('recentUsers');
+    if (!users.length) { el.innerHTML = '<div class="loading">Veri yok</div>'; return; }
+    el.innerHTML = `<table><thead><tr><th>ID</th><th>Kullanıcı</th><th>E-posta</th><th>Durum</th></tr></thead><tbody>
+        ${users.map(u => `<tr>
+            <td style="font-family:var(--mono); color:var(--muted);">#${u.id}</td>
+            <td><b>${esc(u.username)}</b></td>
+            <td style="color:var(--muted);">${esc(u.email)}</td>
+            <td>${u.is_banned ? '<span class="badge badge-red">BANLI</span>' : u.is_admin ? '<span class="badge badge-yellow">ADMİN</span>' : '<span class="badge badge-green">AKTİF</span>'}</td>
+        </tr>`).join('')}
+    </tbody></table>`;
+}
 
-            // Admin kontrolü
-            const statsRes = await fetch(API_URL + '/admin/stats', {
-                headers: { 'Authorization': 'Bearer ' + adminToken }
-            });
-
-            if (!statsRes.ok) {
-                errEl.textContent = 'Bu hesapta admin yetkisi yok.';
-                adminToken = '';
-                return;
-            }
-
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('adminPage').style.display = 'block';
-
-            await Promise.all([loadStats(), loadUsers(), loadReports()]);
-
-        } catch (err) {
-            errEl.textContent = 'Bağlantı hatası. Backend URL doğru mu?';
-        }
-    }
-
-    function adminLogout() {
-        adminToken = '';
-        document.getElementById('loginPage').style.display = 'flex';
-        document.getElementById('adminPage').style.display = 'none';
-    }
-
-    // ─── SEKME ───
-    function showTab(tabId, btn) {
-        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        btn.classList.add('active');
-    }
-
-    // ─── STATS ───
-    async function loadStats() {
-        try {
-            const res = await fetch(API_URL + '/admin/stats', {
-                headers: { 'Authorization': 'Bearer ' + adminToken }
-            });
-            if (!res.ok) return;
-            const s = await res.json();
-            document.getElementById('statUsers').textContent = s.total_users;
-            document.getElementById('statReports').textContent = s.pending_reports;
-            document.getElementById('statBanned').textContent = s.banned_users;
-            document.getElementById('statAdmins').textContent = s.admin_users ?? '—';
-
-            // Badge
-            const badge = document.getElementById('reportsBadge');
-            if (s.pending_reports > 0) {
-                badge.style.display = 'inline-block';
-                badge.textContent = s.pending_reports;
-            } else {
-                badge.style.display = 'none';
-            }
-
-            // Son kullanıcılar
-            renderRecentUsers(allUsers.slice(0, 8));
-        } catch (err) {}
-    }
-
-    function renderRecentUsers(users) {
-        const el = document.getElementById('recentUsers');
-        if (!users.length) { el.innerHTML = '<div class="loading">Veri yok</div>'; return; }
-        el.innerHTML = `
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Kullanıcı Adı</th>
-                        <th>E-posta</th>
-                        <th>Durum</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${users.map(u => `
-                        <tr>
-                            <td style="font-family:var(--mono); color:var(--muted);">#${u.id}</td>
-                            <td><b>${u.username}</b></td>
-                            <td style="color:var(--muted);">${u.email}</td>
-                            <td>${u.is_banned
-                                ? '<span class="badge badge-red">BANLI</span>'
-                                : u.is_admin
-                                ? '<span class="badge badge-yellow">ADMİN</span>'
-                                : '<span class="badge badge-green">AKTİF</span>'
-                            }</td>
-                        </tr>
-                    `).join('')}
-                </tbody>
-            </table>
-        `;
-    }
-
-    // ─── KULLANICILAR ───
-    async function loadUsers() {
-        document.getElementById('usersList').innerHTML = '<div class="loading">LOADING...</div>';
-        try {
-            const res = await fetch(API_URL + '/admin/users', {
-                headers: { 'Authorization': 'Bearer ' + adminToken }
-            });
-            if (!res.ok) { document.getElementById('usersList').innerHTML = '<div class="empty"><div class="icon">❌</div><p>Yüklenemedi.</p></div>'; return; }
-            allUsers = await res.json();
-            renderUsers();
-            renderRecentUsers(allUsers.slice(0, 8));
-        } catch (err) {
-            document.getElementById('usersList').innerHTML = '<div class="empty"><div class="icon">❌</div><p>Bağlantı hatası.</p></div>';
-        }
-    }
-
-    function setUserFilter(f, btn) {
-        userFilter = f;
-        document.querySelectorAll('#usersTab .filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+async function loadUsers() {
+    document.getElementById('usersList').innerHTML = '<div class="loading">LOADING...</div>';
+    try {
+        const res = await fetch(API_URL + '/admin/users', { headers: { 'Authorization': 'Bearer ' + adminToken } });
+        if (!res.ok) { document.getElementById('usersList').innerHTML = '<div class="empty"><div class="icon">❌</div><p>Yüklenemedi.</p></div>'; return; }
+        allUsers = await res.json();
         renderUsers();
-    }
+        renderRecentUsers(allUsers.slice(0, 8));
+    } catch (err) { document.getElementById('usersList').innerHTML = '<div class="empty"><div class="icon">❌</div><p>Bağlantı hatası.</p></div>'; }
+}
 
-    function filterUsers() { renderUsers(); }
+function setUserFilter(f, btn) {
+    userFilter = f;
+    document.querySelectorAll('#usersTab .filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active'); renderUsers();
+}
+function filterUsers() { renderUsers(); }
 
-    function renderUsers() {
-        const q = (document.getElementById('userSearch')?.value || '').toLowerCase();
-        let users = allUsers;
+function renderUsers() {
+    const q = (document.getElementById('userSearch')?.value || '').toLowerCase();
+    let users = allUsers;
+    if (userFilter === 'banned') users = users.filter(u => u.is_banned);
+    else if (userFilter === 'admin') users = users.filter(u => u.is_admin);
+    if (q) users = users.filter(u => u.username.toLowerCase().includes(q) || u.email.toLowerCase().includes(q));
+    const el = document.getElementById('usersList');
+    if (!users.length) { el.innerHTML = '<div class="empty"><div class="icon">🔍</div><p>Kullanıcı bulunamadı.</p></div>'; return; }
+    el.innerHTML = `<table><thead><tr><th>ID</th><th>Kullanıcı</th><th>E-posta</th><th>Durum</th><th>İşlemler</th></tr></thead><tbody>
+        ${users.map(u => `<tr>
+            <td style="font-family:var(--mono); color:var(--muted); font-size:12px;">#${u.id}</td>
+            <td><b style="color:${u.is_banned ? 'var(--danger)' : 'var(--text)'};">${esc(u.username)}</b></td>
+            <td style="color:var(--muted); font-size:12px;">${esc(u.email)}</td>
+            <td>
+                ${u.is_banned ? '<span class="badge badge-red">BANLI</span>' : ''}
+                ${u.is_admin  ? '<span class="badge badge-yellow">ADMİN</span>' : ''}
+                ${!u.is_banned && !u.is_admin ? '<span class="badge badge-green">AKTİF</span>' : ''}
+            </td>
+            <td><div class="btn-group">
+                ${!u.is_admin ? `
+                    <button class="btn btn-sm ${u.is_banned ? 'btn-success' : 'btn-danger'}" onclick="toggleBan('${esc(u.username)}', ${!u.is_banned})">
+                        ${u.is_banned ? '✅ Banı Kaldır' : '🚫 Banla'}
+                    </button>
+                    <button class="btn btn-sm btn-neutral" onclick="makeAdmin('${esc(u.username)}')">⭐ Admin Yap</button>
+                ` : '<span style="color:var(--muted); font-size:12px;">—</span>'}
+            </div></td>
+        </tr>`).join('')}
+    </tbody></table>`;
+}
 
-        if (userFilter === 'banned') users = users.filter(u => u.is_banned);
-        else if (userFilter === 'admin') users = users.filter(u => u.is_admin);
+async function toggleBan(username, ban) {
+    if (!confirm(`${username} ${ban ? 'banlanacak' : 'banı kaldırılacak'}. Emin misiniz?`)) return;
+    try {
+        const res = await fetch(`${API_URL}/admin/ban/${encodeURIComponent(username)}`, {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + adminToken, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ban })
+        });
+        if (res.ok) { await loadUsers(); await loadStats(); }
+        else { const d = await res.json(); alert('Hata: ' + (d.detail || 'İşlem başarısız.')); }
+    } catch (err) { alert('Bağlantı hatası.'); }
+}
 
-        if (q) users = users.filter(u => u.username.toLowerCase().includes(q) || u.email.toLowerCase().includes(q));
+async function makeAdmin(username) {
+    if (!confirm(`${username} admin yapılsın mı?`)) return;
+    try {
+        const res = await fetch(`${API_URL}/admin/make-admin/${encodeURIComponent(username)}`, {
+            method: 'POST', headers: { 'Authorization': 'Bearer ' + adminToken }
+        });
+        if (res.ok) { await loadUsers(); alert(username + ' admin yapıldı!'); }
+        else { const d = await res.json(); alert('Hata: ' + (d.detail || 'İşlem başarısız.')); }
+    } catch (err) { alert('Bağlantı hatası.'); }
+}
 
-        const el = document.getElementById('usersList');
-        if (!users.length) { el.innerHTML = '<div class="empty"><div class="icon">🔍</div><p>Kullanıcı bulunamadı.</p></div>'; return; }
+async function loadAdsAdmin() {
+    document.getElementById('adsTable').innerHTML = '<div class="loading">LOADING...</div>';
+    try {
+        const res = await fetch(`${API_URL}/admin/ads`, { headers: { 'Authorization': 'Bearer ' + adminToken } });
+        const ads = await res.json();
+        const el  = document.getElementById('adsTable');
+        if (!ads.length) { el.innerHTML = '<div class="empty"><div class="icon">📢</div><p>Henüz reklam yok.</p></div>'; return; }
+        el.innerHTML = `<table><thead><tr><th>Başlık</th><th>Açıklama</th><th>Link</th><th>İşlem</th></tr></thead><tbody>
+            ${ads.map(a => `<tr>
+                <td style="font-weight:700;">${esc(a.title)}</td>
+                <td style="font-size:12px; color:var(--muted);">${esc(a.description || '-')}</td>
+                <td style="font-size:12px;">${a.link_url ? `<a href="${esc(a.link_url)}" target="_blank" style="color:var(--accent);">Link ↗</a>` : '-'}</td>
+                <td><button class="btn btn-sm btn-danger" onclick="deleteAd(${a.id})">Sil</button></td>
+            </tr>`).join('')}
+        </tbody></table>`;
+    } catch (err) { document.getElementById('adsTable').innerHTML = '<div class="empty"><div class="icon">❌</div><p>Yüklenemedi.</p></div>'; }
+}
 
-        el.innerHTML = `
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Kullanıcı</th>
-                        <th>E-posta</th>
-                        <th>Durum</th>
-                        <th>İşlemler</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${users.map(u => `
-                        <tr id="urow-${u.id}">
-                            <td style="font-family:var(--mono); color:var(--muted); font-size:12px;">#${u.id}</td>
-                            <td>
-                                <b style="color:${u.is_banned ? 'var(--danger)' : 'var(--text)'};">${u.username}</b>
-                                ${u.gender ? `<br><span style="font-size:11px; color:var(--muted);">${u.gender}</span>` : ''}
-                            </td>
-                            <td style="color:var(--muted); font-size:12px;">${u.email}</td>
-                            <td>
-                                ${u.is_banned ? '<span class="badge badge-red">BANLI</span>' : ''}
-                                ${u.is_admin ? '<span class="badge badge-yellow">ADMİN</span>' : ''}
-                                ${!u.is_banned && !u.is_admin ? '<span class="badge badge-green">AKTİF</span>' : ''}
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    ${!u.is_admin ? `
-                                        <button class="btn btn-sm ${u.is_banned ? 'btn-success' : 'btn-danger'}"
-                                            onclick="toggleBan('${u.username}', ${!u.is_banned})">
-                                            ${u.is_banned ? '✅ Banı Kaldır' : '🚫 Banla'}
-                                        </button>
-                                        <button class="btn btn-sm btn-neutral"
-                                            onclick="makeAdmin('${u.username}')">
-                                            ⭐ Admin Yap
-                                        </button>
-                                    ` : '<span style="color:var(--muted); font-size:12px;">—</span>'}
-                                </div>
-                            </td>
-                        </tr>
-                    `).join('')}
-                </tbody>
-            </table>
-        `;
-    }
+async function createAd() {
+    const title = document.getElementById('adTitle').value.trim();
+    if (!title) { alert('Başlık zorunludur.'); return; }
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('link_url', document.getElementById('adLink').value.trim());
+    formData.append('image_url', document.getElementById('adImage').value.trim());
+    formData.append('description', document.getElementById('adDesc').value.trim());
+    try {
+        const res = await fetch(`${API_URL}/admin/ads`, {
+            method: 'POST', headers: { 'Authorization': 'Bearer ' + adminToken }, body: formData
+        });
+        if (res.ok) {
+            ['adTitle','adLink','adImage','adDesc'].forEach(id => document.getElementById(id).value = '');
+            loadAdsAdmin();
+        } else { const e = await res.json(); alert('Hata: ' + (e.detail || 'Oluşturulamadı.')); }
+    } catch (err) { alert('Bağlantı hatası.'); }
+}
 
-    // ─── ŞİKAYETLER ───
-    async function loadReports() {
-        document.getElementById('reportsList').innerHTML = '<div class="loading">LOADING...</div>';
-        try {
-            const res = await fetch(API_URL + '/admin/reports', {
-                headers: { 'Authorization': 'Bearer ' + adminToken }
-            });
-            if (!res.ok) { document.getElementById('reportsList').innerHTML = '<div class="empty"><div class="icon">❌</div><p>Yüklenemedi.</p></div>'; return; }
-            allReports = await res.json();
-            renderReports();
-        } catch (err) {
-            document.getElementById('reportsList').innerHTML = '<div class="empty"><div class="icon">❌</div><p>Bağlantı hatası.</p></div>';
-        }
-    }
+async function deleteAd(id) {
+    if (!confirm('Bu reklamı silmek istediğinize emin misiniz?')) return;
+    try {
+        const res = await fetch(`${API_URL}/admin/ads/${id}`, {
+            method: 'DELETE', headers: { 'Authorization': 'Bearer ' + adminToken }
+        });
+        if (res.ok) loadAdsAdmin();
+        else alert('Silinemedi.');
+    } catch (err) { alert('Bağlantı hatası.'); }
+}
 
-    function setReportFilter(f, btn) {
-        reportFilter = f;
-        document.querySelectorAll('#reportsTab .filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+async function loadJobsAdmin() {
+    document.getElementById('jobsTable').innerHTML = '<div class="loading">LOADING...</div>';
+    try {
+        const res  = await fetch(`${API_URL}/profile/jobs`, { headers: { 'Authorization': 'Bearer ' + adminToken } });
+        const data = await res.json();
+        const jobs = data.jobs || data;
+        const el   = document.getElementById('jobsTable');
+        if (!jobs.length) { el.innerHTML = '<div class="empty"><div class="icon">💼</div><p>İlan bulunamadı.</p></div>'; return; }
+        el.innerHTML = `<table><thead><tr><th>Başlık</th><th>Kullanıcı</th><th>Şehir</th><th>Tip</th><th>Tarih</th></tr></thead><tbody>
+            ${jobs.map(j => `<tr>
+                <td style="font-weight:700;">${esc(j.title)}</td>
+                <td style="color:var(--accent);">${esc(j.owner || '-')}</td>
+                <td style="font-size:12px; color:var(--muted);">${esc(j.city || '-')}</td>
+                <td><span class="badge badge-blue">${esc(j.job_type || '-')}</span></td>
+                <td style="font-size:12px; color:var(--muted);">${j.created_at ? j.created_at.substring(0,10) : '-'}</td>
+            </tr>`).join('')}
+        </tbody></table>`;
+    } catch (err) { document.getElementById('jobsTable').innerHTML = '<div class="empty"><div class="icon">❌</div><p>Yüklenemedi.</p></div>'; }
+}
+
+async function loadReports() {
+    document.getElementById('reportsList').innerHTML = '<div class="loading">LOADING...</div>';
+    try {
+        const res = await fetch(`${API_URL}/admin/reports`, { headers: { 'Authorization': 'Bearer ' + adminToken } });
+        if (!res.ok) { document.getElementById('reportsList').innerHTML = '<div class="empty"><div class="icon">❌</div><p>Yüklenemedi.</p></div>'; return; }
+        allReports = await res.json();
         renderReports();
-    }
+    } catch (err) { document.getElementById('reportsList').innerHTML = '<div class="empty"><div class="icon">❌</div><p>Bağlantı hatası.</p></div>'; }
+}
 
-    function renderReports() {
-        let reports = allReports;
-        if (reportFilter !== 'all') reports = reports.filter(r => r.status === reportFilter);
+function setReportFilter(f, btn) {
+    reportFilter = f;
+    document.querySelectorAll('#reportsTab .filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active'); renderReports();
+}
 
-        const el = document.getElementById('reportsList');
-        if (!reports.length) { el.innerHTML = '<div class="empty"><div class="icon">✅</div><p>Şikayet bulunamadı.</p></div>'; return; }
-
-        el.innerHTML = reports.map(r => {
-            const badgeClass = { 'beklemede': 'badge-red', 'incelendi': 'badge-yellow', 'çözüldü': 'badge-green' }[r.status] || 'badge-gray';
-            const isActive = r.status === 'beklemede';
-
-            return `
-                <div class="report-card ${!isActive ? 'resolved' : ''}">
-                    <div class="report-top">
-                        <div class="report-users">
-                            <span class="from">Şikayet: </span>
-                            <span class="user-a">${r.reporter}</span>
-                            <span class="arrow">→</span>
-                            <span class="user-b">${r.reported}</span>
-                        </div>
-                        <span class="badge ${badgeClass}">${r.status.toUpperCase()}</span>
-                    </div>
-
-                    <div class="report-meta">
-                        <span class="badge badge-gray">${r.category}</span>
-                        <span style="font-size:11px; color:var(--muted);">🕐 ${r.created_at}</span>
-                    </div>
-
-                    ${r.description ? `<div class="report-desc">${r.description}</div>` : ''}
-
-                    ${r.screenshot_url ? `
-                        <a href="${r.screenshot_url}" target="_blank" rel="noopener"
-                           style="display:inline-block; margin-bottom:12px; font-size:12px; color:var(--accent2); text-decoration:underline;">
-                            📸 Ekran görüntüsünü gör
-                        </a>
-                    ` : ''}
-
-                    ${isActive ? `
-                        <div class="report-actions">
-                            <button class="btn btn-sm btn-danger" onclick="banAndResolve('${r.reported}', ${r.id})">🚫 Banla & Çöz</button>
-                            <button class="btn btn-sm btn-success" onclick="updateReport(${r.id}, 'çözüldü')">✅ Çözüldü</button>
-                            <button class="btn btn-sm btn-neutral" onclick="updateReport(${r.id}, 'incelendi')">👁️ İncelendi</button>
-                        </div>
-                    ` : ''}
+function renderReports() {
+    let reports = allReports;
+    if (reportFilter !== 'all') reports = reports.filter(r => r.status === reportFilter);
+    const el = document.getElementById('reportsList');
+    if (!reports.length) { el.innerHTML = '<div class="empty"><div class="icon">✅</div><p>Şikayet bulunamadı.</p></div>'; return; }
+    el.innerHTML = reports.map(r => {
+        const badgeClass = { 'beklemede': 'badge-red', 'incelendi': 'badge-yellow', 'çözüldü': 'badge-green' }[r.status] || 'badge-gray';
+        const isActive = r.status === 'beklemede';
+        return `<div class="report-card ${!isActive ? 'resolved' : ''}">
+            <div class="report-top">
+                <div class="report-users">
+                    <span class="from">Şikayet: </span>
+                    <span class="user-a">${esc(r.reporter)}</span>
+                    <span class="arrow">→</span>
+                    <span class="user-b">${esc(r.reported)}</span>
                 </div>
-            `;
-        }).join('');
-    }
+                <span class="badge ${badgeClass}">${r.status.toUpperCase()}</span>
+            </div>
+            <div class="report-meta">
+                <span class="badge badge-gray">${esc(r.category)}</span>
+                <span style="font-size:11px; color:var(--muted);">🕐 ${r.created_at || ''}</span>
+            </div>
+            ${r.description ? `<div class="report-desc">${esc(r.description)}</div>` : ''}
+            ${isActive ? `<div class="report-actions">
+                <button class="btn btn-sm btn-danger" onclick="toggleBan('${esc(r.reported)}', true)">🚫 Banla</button>
+                <button class="btn btn-sm btn-success" onclick="updateReport(${r.id}, 'çözüldü')">✅ Çözüldü</button>
+                <button class="btn btn-sm btn-neutral" onclick="updateReport(${r.id}, 'incelendi')">👁️ İncelendi</button>
+            </div>` : ''}
+        </div>`;
+    }).join('');
+}
 
-    // ─── AKSİYONLAR ───
-    async function toggleBan(username, ban) {
-        if (!confirm(`${username} ${ban ? 'banlanacak' : 'banı kaldırılacak'}. Emin misiniz?`)) return;
-        try {
-            const res = await fetch(API_URL + '/admin/ban/' + encodeURIComponent(username), {
-                method: 'POST',
-                headers: { 'Authorization': 'Bearer ' + adminToken, 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ban })
-            });
-            if (res.ok) {
-                await loadUsers();
-                await loadStats();
-                alert(username + (ban ? ' banlandı.' : ' banı kaldırıldı.'));
-            } else {
-                const d = await res.json();
-                alert('Hata: ' + (d.detail || 'İşlem başarısız.'));
-            }
-        } catch (err) { alert('Bağlantı hatası.'); }
-    }
+async function updateReport(reportId, status) {
+    try {
+        const res = await fetch(`${API_URL}/admin/reports/${reportId}`, {
+            method: 'PUT',
+            headers: { 'Authorization': 'Bearer ' + adminToken, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status })
+        });
+        if (res.ok) { await loadReports(); await loadStats(); }
+        else alert('Güncelleme başarısız.');
+    } catch (err) { alert('Bağlantı hatası.'); }
+}
 
-    async function makeAdmin(username) {
-        if (!confirm(`${username} admin yapılsın mı? Bu işlem geri alınamaz!`)) return;
-        try {
-            const res = await fetch(API_URL + '/admin/make-admin/' + encodeURIComponent(username), {
-                method: 'POST',
-                headers: { 'Authorization': 'Bearer ' + adminToken }
-            });
-            if (res.ok) { await loadUsers(); alert(username + ' admin yapıldı!'); }
-            else { const d = await res.json(); alert('Hata: ' + (d.detail || 'İşlem başarısız.')); }
-        } catch (err) { alert('Bağlantı hatası.'); }
-    }
-
-    async function updateReport(reportId, status) {
-        try {
-            const res = await fetch(API_URL + '/admin/reports/' + reportId, {
-                method: 'PUT',
-                headers: { 'Authorization': 'Bearer ' + adminToken, 'Content-Type': 'application/json' },
-                body: JSON.stringify({ status })
-            });
-            if (res.ok) { await loadReports(); await loadStats(); }
-            else { alert('Güncelleme başarısız.'); }
-        } catch (err) { alert('Bağlantı hatası.'); }
-    }
-
-    async function banAndResolve(username, reportId) {
-        const ok = await toggleBan(username, true);
-        if (ok !== false) await updateReport(reportId, 'çözüldü');
-    }
+function esc(text) {
+    if (!text) return '';
+    return String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 </script>
 </body>
 </html>
